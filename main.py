@@ -26,6 +26,9 @@ pip3 install -r requirements.txt
 
 This will install the packages from the requirements.txt for this project.
 '''
+# Print environment variables for debugging
+print(os.environ.get('FLASK_KEY'))
+print(os.environ.get('DB_URI'))
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
@@ -40,7 +43,6 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return db.get_or_404(User, user_id)
-
 
 # For adding profile images to the comment section
 gravatar = Gravatar(app,
@@ -273,6 +275,5 @@ def about():
 def contact():
     return render_template("contact.html", current_user=current_user)
 
-
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run()
